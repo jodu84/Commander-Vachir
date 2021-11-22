@@ -7,7 +7,9 @@ class CoboltLaser():
     
     def __init__(self, port=None, serialnumber=None, baudrate=11500):
         self.serialnumber = serialnumber
+        self.status = None
         self.port = port
+        self.modelnumber = None
         self.baudrate=baudrate
         self.address=None
         self.connect()
@@ -28,21 +30,28 @@ class CoboltLaser():
             
             ports = list_ports.comports()
             for port in ports:
+                
+                self.port = port.device
+                
                 try:
-                    self.port = port
                     self.address = serial.Serial(self.port,baudrate=self.baudrate)
                     sn = self.send_cmd('sn?')
                     self.address.close()
                     
+                    print([sn, self.serialnumber])
+                    
                     if sn == self.serialnumber:
-                        self.port = self.device
                         self.address = serial.Serial(self.port,baudrate=self.baudrate)
+                        self.status = 'Connected'
                         break
+                    else:
+                        self.port = None
+                        
                 except:
                     pass
                 
             if self.port == None:
-                raise Exception('No laser found')
+                self.status = 'disconnected'
                                 
         return
     
@@ -66,7 +75,7 @@ class CoboltLaser():
         
         while (time_stamp < timeout):
             try:
-                rec_str = self.address.readline().decode()
+                rec_str = self.address.readline().decode().replace('\r\n', '')
                 return rec_str
             except:
                 time_stamp = self._timeDiff(time_start)

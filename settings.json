@@ -1,0 +1,29 @@
+{
+    "Meta": {},
+    "Device": {
+        "Laser": {
+            "06-405-DPL": {
+                "Wavelength": "405",
+                "Port": "COM1",
+                "Serialnumber": "17211",
+                "Mode": "Current",
+                "Value": "195"
+            },
+            "06-638-MLD": {
+                "Wavelength": "638",
+                "Port": "COM3",
+                "Serialnumber": "16811",
+                "Mode": "Current",
+                "Value": "91"
+            },
+            "06-561-DPL": {
+                "Wavelength": "561",
+                "Port": "COM7",
+                "Serialnumber": "12526",
+                "Mode": "Current",
+                "Value": "126"
+            }
+        },
+        "AOTF": {}
+    }
+}
